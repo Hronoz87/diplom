@@ -1,0 +1,1 @@
+select * from cloud_name_and_password where user_name = ? and password = ?;
