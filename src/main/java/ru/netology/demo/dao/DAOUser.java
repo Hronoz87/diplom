@@ -1,5 +1,6 @@
-package ru.netology.demo.model;
+package ru.netology.demo.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,16 +15,17 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "cloud_name_and_password")
-public class User implements Serializable {
+public class DAOUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column
     private String username;
 
-    @Column(nullable = false)
+    @Column
+    @JsonIgnore
     private String password;
 
 }

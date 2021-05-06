@@ -7,11 +7,17 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import ru.netology.demo.configJwt.JwtTokenUtil;
-import ru.netology.demo.model.AuthToken;
-import ru.netology.demo.model.UserEntity;
+import ru.netology.demo.model.JwtRequest;
+import ru.netology.demo.model.JwtResponse;
+import ru.netology.demo.model.UserDTO;
 import ru.netology.demo.service.JwtUserDetailsService;
+
 
 @RestController
 @CrossOrigin
@@ -24,25 +30,24 @@ public class JwtAuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private JwtUserDetailsService userDetailsService;
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthToken> createAuthenticationToken (@RequestBody UserEntity userEntity) throws Exception {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-        System.out.println("Пришёл клиент с login/password - " + userEntity.getUserName() + "/"  + userEntity.getPassword());
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-        var user = jwtUserDetailsService.loadUserByUsername(userEntity.getUserName());
-
-        System.out.println("Клиент из базы данных с login/password - " + user.getUsername() + "/"  + user.getPassword());
-
-        authenticate(userEntity.getUserName(), userEntity.getPassword());
-
-        final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(userEntity.getUserName());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthToken(token));
+        return ResponseEntity.ok(new JwtResponse(token));
     }
+
+//    @RequestMapping(value = "/register", method = RequestMethod.POST)
+//    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
+//        return ResponseEntity.ok(userDetailsService.save(user));
+//    }
 
     private void authenticate(String username, String password) throws Exception {
         try {
