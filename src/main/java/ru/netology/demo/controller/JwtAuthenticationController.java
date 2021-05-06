@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.netology.demo.configJwt.JwtTokenUtil;
 import ru.netology.demo.model.JwtRequest;
 import ru.netology.demo.model.JwtResponse;
-import ru.netology.demo.model.UserDTO;
 import ru.netology.demo.service.JwtUserDetailsService;
 
 
@@ -44,10 +43,6 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-//    @RequestMapping(value = "/register", method = RequestMethod.POST)
-//    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
-//        return ResponseEntity.ok(userDetailsService.save(user));
-//    }
 
     private void authenticate(String username, String password) throws Exception {
         try {

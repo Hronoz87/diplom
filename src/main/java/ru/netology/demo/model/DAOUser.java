@@ -1,4 +1,4 @@
-package ru.netology.demo.dao;
+package ru.netology.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
