@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.netology.demo.configJwt.JwtTokenUtil;
+import ru.netology.demo.model.DAOUser;
 import ru.netology.demo.model.JwtRequest;
 import ru.netology.demo.model.JwtResponse;
 import ru.netology.demo.service.JwtUserDetailsService;
@@ -33,12 +34,17 @@ public class JwtAuthenticationController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+        System.out.println("Пришёл клиент с login/password - " + authenticationRequest.getUsername() + "/"  + authenticationRequest.getPassword());
 
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
+        System.out.println("User Details: " + userDetails);
+
         final String token = jwtTokenUtil.generateToken(userDetails);
+
+        System.out.println("Token: " + token);
 
         return ResponseEntity.ok(new JwtResponse(token));
     }

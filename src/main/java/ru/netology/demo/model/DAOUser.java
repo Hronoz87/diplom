@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class DAOUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -27,5 +27,6 @@ public class DAOUser implements Serializable {
     @Column
     @JsonIgnore
     private String password;
+
 
 }
