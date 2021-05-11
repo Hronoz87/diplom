@@ -2,18 +2,22 @@ package ru.netology.demo.model;
 
 import org.springframework.stereotype.Component;
 
-@Component
-public class UserDTO {
+import java.io.Serializable;
 
-    public String username;
+@Component
+public class UserDTO implements Serializable {
+
+    private static final long serialVersionUID = 5926468583005150707L;
+
+    public String login;
     public String password;
 
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {

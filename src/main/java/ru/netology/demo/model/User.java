@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "cloud_name_and_password")
-public class DAOUser implements Serializable {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
