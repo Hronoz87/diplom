@@ -1,4 +1,4 @@
-package com.example.diploma1.controller;
+package ru.netology.demo.controller;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.testcontainers.containers.GenericContainer;
 class LogoutControllerTest {
     @Autowired
     TestRestTemplate template1;
-    public static GenericContainer<?> app = new GenericContainer("app").withExposedPorts(29999);
+    public static GenericContainer<?> app = new GenericContainer("app").withExposedPorts(29990);
 
     @BeforeAll
     public static void setUp() {

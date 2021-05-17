@@ -1,4 +1,4 @@
-package com.example.diploma1.controller;
+package ru.netology.demo.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,7 +19,7 @@ import java.util.Objects;
 public class LoginControllerTest {
     @Autowired
     TestRestTemplate template1;
-    public static GenericContainer<?> app = new GenericContainer("app").withExposedPorts(29999);
+    public static GenericContainer<?> app = new GenericContainer("app").withExposedPorts(29990);
 
     @BeforeAll
     public static void setUp() {
@@ -27,11 +27,11 @@ public class LoginControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"qwerty", "asdfg", "zxcvb", "aximgromak@gmail.com", "mr.dezolator@list.com"})
+    @ValueSource(strings = {"qwerty", "asdfg", "zxcvb", "andreq", "ivon"})
     void testLoggingWithWrongUsername_POST(String args) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("login", args);
-        map.put("password", "12345");
+        map.put("password", "111111");
 
         ResponseEntity<String> response = template1.postForEntity("/login", map, String.class);
         Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.FORBIDDEN.value());
@@ -60,7 +60,7 @@ public class LoginControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"qwerty", "asdfg", "zxcvb", "aximgromak@gmail.com", "mr.dezolator@list.com"})
+    @ValueSource(strings = {"qwerty", "asdfg", "zxcvb", "andreq", "ivon"})
     void testLoggingWithNullKey1_POST(String args) {
         HashMap<Object, Object> map = new HashMap<>();
         map.put(null, args);
@@ -78,7 +78,7 @@ public class LoginControllerTest {
     @ValueSource(strings = {"11223344", "123", "1234", "/*-+--/*-00-", "--**/1*4-255*/", "", "  ", ""})
     void testLoggingWithWrongPassword_POST(String args) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("login", "maximgromak@gmail.com");
+        map.put("login", "andrei");
         map.put("password", args);
 
         ResponseEntity<String> response = template1.postForEntity("/login", map, String.class);
@@ -88,8 +88,8 @@ public class LoginControllerTest {
     @Test
     void successLogging_POST_expect200() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("login", "maximgromak@gmail.com");
-        map.put("password", "12345");
+        map.put("login", "andrei");
+        map.put("password", "111111");
 
         ResponseEntity<String> response = template1.postForEntity("/login", map, String.class);
         Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.OK.value());
@@ -98,8 +98,8 @@ public class LoginControllerTest {
     @Test
     void successLogging_POST_expectNotEmptyToken() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("login", "maximgromak@gmail.com");
-        map.put("password", "12345");
+        map.put("login", "andrei");
+        map.put("password", "111111");
 
         ResponseEntity<String> response = template1.postForEntity("/login", map, String.class);
         Assertions.assertTrue(Objects.requireNonNull(response.getBody()).contains("auth-token"));
