@@ -1,6 +1,5 @@
 package ru.netology.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,25 +7,22 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@Builder
 @Entity
-@Table(name = "cloud_name_and_password")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String login;
     @Column
     private String username;
-
     @Column
-    @JsonIgnore
+    private String token;
+    @Column
     private String password;
-
-
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<IncomingFile> files;
 }
