@@ -3,7 +3,6 @@ package ru.netology.demo.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class LogoutController {
 
-    @Autowired
-    UserService userService;
+    private UserService userService;
+    private JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    JwtTokenUtil jwtTokenUtil;
+    public LogoutController(UserService userService, JwtTokenUtil jwtTokenUtil) {
+        this.userService = userService;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
     private static final Logger log = LoggerFactory.getLogger(LogoutController.class);
 
