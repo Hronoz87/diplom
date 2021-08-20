@@ -2,7 +2,6 @@ package ru.netology.demo.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +18,13 @@ import java.util.HashMap;
 @RestController
 public class LoginController {
 
-    @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
     private UserService userService;
+
+    public LoginController(JwtTokenUtil jwtTokenUtil, UserService userService) {
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userService = userService;
+    }
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 

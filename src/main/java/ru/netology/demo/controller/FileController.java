@@ -5,7 +5,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,15 +23,15 @@ import java.io.IOException;
 
 @RestController
 public class FileController {
+    private FileService fileService;
+    private UserService userService;
+    private JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    FileService fileService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    JwtTokenUtil jwtTokenUtil;
+    public FileController(FileService fileService, UserService userService, JwtTokenUtil jwtTokenUtil) {
+        this.fileService = fileService;
+        this.userService = userService;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
     private static final Logger log = LoggerFactory.getLogger(FileController.class);
 
